@@ -1,0 +1,23 @@
+﻿footer {
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 30px 0;
+}
+
+    .site-info {
+        font-weight: 400;
+        margin-bottom: 10px;
+    }
+
+        .site-info a {
+            color: #fff;
+        }
+
+    .social-block li a {
+        color: #fff;
+    }
+
+        .social-block li a:hover, .site-footer .social-block li a:focus {
+            opacity: 0.8;
+        }

@@ -1,0 +1,46 @@
+﻿
+<nav id="site-nav" class="navbar fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+
+            <!-- logo -->
+            <div class="site-branding">
+                <a class="logo nav-link" data-scroll href="#site-header">
+
+                    <!-- logo image  -->
+                    <img src=@conference.Logo alt="Logo">
+
+                     @conference.Name
+                </a>
+            </div>
+
+        </div><!-- /.navbar-header -->
+       
+        <ul class="nav navbar-nav justify-content-end">
+            <!-- navigation menu -->
+            <li class="nav-item px-2"><a class="nav-link" data-scroll href="#about">О коференции</a></li>
+            <li class="nav-item px-2"><a class="nav-link" data-scroll href="#speakers">Учасники</a></li>
+            <li class="nav-item px-2"><a class="nav-link" data-scroll href="#schedule">Программа</a></li>
+        </ul>
+        
+    </div><!-- /.container -->
+</nav>
+
+@code {
+
+    private Conference conference = new()
+    {
+        Name = "II научный практико-ориентированый семинар",
+        Logo = "images/logo.png"
+    };
+
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void AddActiveCssClass()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
+

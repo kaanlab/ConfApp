@@ -1,0 +1,23 @@
+﻿<header id="site-header" class="site-header valign-center">
+    <div class="intro">
+
+        <h2>@conference.Banner</h2>
+
+        <h1>@conference.MainTopic</h1>
+
+        <p>@conference.Topic</p>
+
+        <!--<a class="btn btn-white" data-scroll href="#registration">Register Now</a>-->
+
+    </div>
+</header>
+
+@code
+{
+    private Conference conference = new()
+    {
+        Banner = "21 - 22 января 2021 / г.Петрозаводск",
+        MainTopic = "Цифровая трансформация образования",
+        Topic = "управленческая, технологическая и кадровая готовность довузовских образовательных организаций Министерства обороны Российской Федерации"
+    };
+}
