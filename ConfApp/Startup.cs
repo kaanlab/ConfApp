@@ -30,7 +30,9 @@ namespace ConfApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+
+            services.AddScoped<IStorageService, StorageService>();
+
             services.AddMudBlazorDialog();
             services.AddMudBlazorSnackbar();
             services.AddMudBlazorResizeListener();

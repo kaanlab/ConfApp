@@ -1,0 +1,26 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudTextField Value="@conference.Name" Label="Название" />
+        <MudTextField Value="@conference.MainTopic" Label="Тема конференции" />
+        <MudTextField Value="@conference.Topic" Label="Тема конференции (расширенная)" />
+        <MudTextField Value="@conference.Banner" Label="Время и место проведения" />
+
+        <MudGrid Class="mt-5">
+            <MudItem>
+                <img src=@conference.Logo>
+            </MudItem>
+            <MudItem>
+                <InputFile id="fileInput" OnChange="OnInputFileChange" hidden />
+                <MudFab HtmlTag="label"
+                        Color="Color.Secondary"
+                        Icon="@Filled.Image"
+                        Label="Загрузить лого"
+                        for="fileInput" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Отменить</MudButton>
+        <MudButton Color="Color.Info" OnClick="Submit">Сохранить</MudButton>
+    </DialogActions>
+</MudDialog>

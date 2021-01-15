@@ -1,9 +1,5 @@
 /* 
- * 1. Google Font
- */
-/*@import url(http://fonts.googleapis.com/css?family=Roboto:300,400,700);*/
-/* 
- * 2.0 Global Style
+ * 1.0 Global Style
  */
 html {
   font-family: 'Roboto', sans-serif;
@@ -148,10 +144,10 @@ ul li {
 }
 
 /* 
- * 3.0 Helper Class
+ * 2.0 Helper Class
  */
 /* 
- * 3.1 Helper Class: font-weight
+ * 2.1 Helper Class: font-weight
  */
 .font-300 {
   font-weight: 300;
@@ -166,7 +162,7 @@ ul li {
 }
 
 /* 
- * 3.2 Helper Class: margin
+ * 2.2 Helper Class: margin
  */
 .mt0 {
   margin-top: 0;
@@ -181,14 +177,14 @@ ul li {
 }
 
 /* 
- * 3.3 Helper Class: list
+ * 2.3 Helper Class: list
  */
 .list-arrow-right li::before {
   content: "\f3d3";
 }
 
 /* 
- * 3.4 Helper Class: button
+ * 2.4 Helper Class: button
  */
 .btn-white {
   color: #000;
@@ -209,7 +205,7 @@ ul li {
 }
 
 /* 
- * 3.5 Helper Class: background
+ * 2.5 Helper Class: background
  */
 .bg-image, .bg-image-1, .bg-image-2 {
   position: relative;
@@ -252,7 +248,7 @@ ul li {
 }
 
 /* 
- * 4.0 Blazor-errors
+ * 3.0 Blazor-errors
  */
 #blazor-error-ui {
     background: lightyellow;

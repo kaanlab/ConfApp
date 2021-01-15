@@ -1,5 +1,10 @@
 <MudBlazor.MudThemeProvider />
-<MudDialogProvider />
+<MudDialogProvider 
+    FullWidth="true"  
+    MaxWidth="MaxWidth.Large"    
+    CloseButton="true"    
+    DisableBackdropClick="true"   
+    Position="DialogPosition.Center"   />
 <MudSnackbarProvider />
 
 <Router AppAssembly="@typeof(Program).Assembly">
