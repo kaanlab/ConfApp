@@ -40,20 +40,35 @@ namespace ConfApp.Shared.Admin
             return false;
         }
 
-        private async Task EditConference(Conference conference)
+        private async Task UpdateConference(Conference conference)
         {
             var parameters = new DialogParameters { ["conference"] = conference };
-            var dialog = Dialog.Show<ConferenceEditDialog>("Редактирование конференции", parameters);
+            var dialog = Dialog.Show<ConferenceAddOrUpdateDialog>("Редактирование конференции", parameters);
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                //var id = dialog.Result.Id;
+                var updateConfirence = dialog.Result.Result.Data as Conference;
+                var index = Conferences.IndexOf(conference);
+                Conferences.Remove(conference);
+                Conferences.Insert(index, updateConfirence);
             }
         }
 
-        private async Task NewConference()
+        private async Task DeleteConference(Conference conference)
         {
-            var dialog = Dialog.Show<ConferenceNewDialog>("Новая коференция");
+            var parameters = new DialogParameters { ["conference"] = conference };
+            var dialog = Dialog.Show<ConferenceDeleteDialog>("Удаление конференции", parameters);
+            var result = await dialog.Result;
+            if (!result.Cancelled)
+            {
+                var deletedConfirence = dialog.Result.Result.Data as Conference;
+                Conferences.Remove(deletedConfirence);
+            }
+        }
+
+        private async Task AddConference()
+        {
+            var dialog = Dialog.Show<ConferenceAddOrUpdateDialog>("Новая коференция");
             var result = await dialog.Result;
             if (!result.Cancelled)
             {

@@ -11,7 +11,7 @@ using ConfApp.Data;
 
 namespace ConfApp.Shared.Admin
 {
-    public partial class ConferenceEditDialog
+    public partial class ConferenceDeleteDialog
     {
         [Inject]
         ISnackbar Snackbar { get; set; }

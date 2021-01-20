@@ -1,6 +1,7 @@
 ﻿<MudTable Class="mt-5" Items="@Conferences" Hover="true" Filter="new Func<Conference,bool>(FilterFunc)" @bind-SelectedItem="selectedCoference">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Список конференций</MudText>
+        <MudIconButton Icon="@Icons.Material.AddBox" Color="Color.Primary" Size="Size.Large" @onclick="AddConference" />
         <MudToolBarSpacer />
         <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
@@ -11,6 +12,7 @@
         <MudTh>Время и место проведения</MudTh>
         <MudTh>Логотип</MudTh>
         <MudTh></MudTh>
+        <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Название">@context.Name</MudTd>
@@ -19,10 +21,13 @@
         <MudTd DataLabel="Время и место проведения">@context.Banner</MudTd>
         <MudTd DataLabel="Логотип"><img src=@context.Logo></MudTd>
         <MudTd>
-            <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@((e) => EditConference(context))">Изменить</MudButton>
+            <MudIconButton Icon="@Icons.Material.Edit" Color="Color.Info" OnClick="@((e) => UpdateConference(context))" />
+            </MudTd>
+        <MudTd>
+            <MudIconButton Icon="@Icons.Material.Delete" Color="Color.Error" OnClick="@((e) => DeleteConference(context))" />
         </MudTd>
     </RowTemplate>
 </MudTable>
-<MudButton Variant="Variant.Filled" Color="Color.Primary"  @onclick="NewConference">Добавить</MudButton>
+
 
 
