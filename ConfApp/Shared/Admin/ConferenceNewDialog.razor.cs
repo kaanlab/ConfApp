@@ -22,10 +22,28 @@ namespace ConfApp.Shared.Admin
         [CascadingParameter]
         MudDialogInstance MudDialog { get; set; }
 
+        private bool formInvalid = true;
+        private EditContext editContext;
         public Conference conference { get; set; } = new Conference();
 
+        protected override void OnInitialized()
+        {
+            editContext = new EditContext(conference);
+            editContext.OnFieldChanged += HandleFieldChanged;
+        }
 
-        void Submit() => MudDialog.Close(DialogResult.Ok(true));
+        private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
+        {
+            formInvalid = !editContext.Validate();
+            StateHasChanged();
+        }
+
+        async Task Save()
+        {
+            var newConference = await StorageService.AddConference(conference);
+            MudDialog.Close(DialogResult.Ok(newConference));
+            Snackbar.Add("Конференция добавлена!", Severity.Success);
+        }
         void Cancel() => MudDialog.Cancel();
 
         private void UploadFiles(IFileInfo entrie)
@@ -37,6 +55,12 @@ namespace ConfApp.Shared.Admin
         private async Task OnInputFileChange(InputFileChangeEventArgs e)
         {
             conference.Logo = e.File.Name;
+        }
+
+        private async Task OnValidSubmit(EditContext context)
+        {
+            
+            StateHasChanged();
         }
     }
 }

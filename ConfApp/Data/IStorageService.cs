@@ -10,7 +10,7 @@ namespace ConfApp.Data
     {
         // Conference
         IQueryable<Conference> GetConferences();
-        ValueTask<Conference> AddConference(Conference conference);
+        Task<Conference> AddConference(Conference conference);
         ValueTask<Conference> UpdateConference(Conference conference);
         ValueTask<Conference> DeleteConference(Conference conference);
 

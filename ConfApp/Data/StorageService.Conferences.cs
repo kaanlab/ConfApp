@@ -14,7 +14,7 @@ namespace ConfApp.Data
 
         public IQueryable<Conference> GetConferences() => this.Conferences.AsNoTracking();
 
-        public async ValueTask<Conference> AddConference(Conference conference)
+        public async Task<Conference> AddConference(Conference conference)
         {
             EntityEntry<Conference> confierenceEntityEntry = await this.Conferences.AddAsync(conference);
             await this.SaveChangesAsync();

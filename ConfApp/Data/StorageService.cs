@@ -19,7 +19,7 @@ namespace ConfApp.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = this.configuration.GetConnectionString("ConnectionString");
+            string connectionString = this.configuration.GetConnectionString("SqLiteConnection");
             optionsBuilder.UseSqlite(connectionString);
         }
     }

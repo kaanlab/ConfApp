@@ -31,6 +31,7 @@ namespace ConfApp
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
+            services.AddDbContext<StorageService>();
             services.AddScoped<IStorageService, StorageService>();
 
             services.AddMudBlazorDialog();

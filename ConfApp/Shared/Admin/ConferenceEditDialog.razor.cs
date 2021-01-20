@@ -30,20 +30,20 @@ namespace ConfApp.Shared.Admin
             MudDialog.Cancel();
         }
 
-        private void DeleteServer()
+        private async Task Update()
         {
             //In a real world scenario this bool would probably be a service to delete the item from api/database
-            bool serverDeleted = true;
-            if (serverDeleted)
-            {
-                Snackbar.Add("Server Deleted", Severity.Success);
-                MudDialog.Close(DialogResult.Ok(conference.Id));
-            }
-            else
-            {
-                Snackbar.Add("Could not delete server!", Severity.Error);
-                MudDialog.Cancel();
-            }
+            var updateConference = await StorageService.UpdateConference(conference);
+            MudDialog.Close(DialogResult.Ok(updateConference));
+            Snackbar.Add("Конференция обновлена!", Severity.Success);
+
+        }
+
+        private async Task Delete()
+        {
+            var deleteConference = await StorageService.DeleteConference(conference);
+            MudDialog.Close(DialogResult.Ok(deleteConference));
+            Snackbar.Add("Конференция удалена!", Severity.Success);
         }
 
 

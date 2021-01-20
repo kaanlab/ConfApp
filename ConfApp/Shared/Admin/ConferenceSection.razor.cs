@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ConfApp.Shared.Admin
 {
-    public partial class ConferenceSection
+    public partial class ConferenceSection : ComponentBase
     {
         [Inject]
         IDialogService Dialog { get; set; }
@@ -19,23 +19,12 @@ namespace ConfApp.Shared.Admin
 
         private string searchString = "";
         private Conference selectedCoference = null;
-        private IEnumerable<Conference> Conferences = null;
+        private IList<Conference> Conferences = null;
         private HashSet<Conference> selectedItems = new HashSet<Conference>();
 
-
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
-            Conferences = StorageService.GetConferences();
-                new List<Conference>()
-        {
-            new Conference{
-                Name = "II научный практико-ориентированый семинар",
-                Banner = "21 - 22 января 2021 / г.Петрозаводск",
-                MainTopic = "Цифровая трансформация образования",
-                Topic = "управленческая, технологическая и кадровая готовность довузовских образовательных организаций Министерства обороны Российской Федерации",
-                Logo = "images/logo.png"
-            }
-        };
+            Conferences = StorageService.GetConferences().ToList();
         }
 
         private bool FilterFunc(Conference element)
@@ -58,13 +47,19 @@ namespace ConfApp.Shared.Admin
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-
+                //var id = dialog.Result.Id;
             }
         }
 
-        private void NewConference()
+        private async Task NewConference()
         {
-            Dialog.Show<ConferenceNewDialog>("Новая коференция");
+            var dialog = Dialog.Show<ConferenceNewDialog>("Новая коференция");
+            var result = await dialog.Result;
+            if (!result.Cancelled)
+            {
+                var newConfirence = dialog.Result.Result.Data as Conference;
+                Conferences.Add(newConfirence);
+            }
         }
     }
 }
