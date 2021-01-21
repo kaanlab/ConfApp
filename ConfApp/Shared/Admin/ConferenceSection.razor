@@ -19,7 +19,7 @@
         <MudTd DataLabel="Тема конференции">@context.MainTopic</MudTd>
         <MudTd DataLabel="Тема конференции (расширенная)">@context.Topic</MudTd>
         <MudTd DataLabel="Время и место проведения">@context.Banner</MudTd>
-        <MudTd DataLabel="Логотип"><img src=@context.Logo></MudTd>
+        <MudTd DataLabel="Логотип"><img src="/images/@context.Logo"></MudTd>
         <MudTd>
             <MudIconButton Icon="@Icons.Material.Edit" Color="Color.Info" OnClick="@((e) => UpdateConference(context))" />
             </MudTd>

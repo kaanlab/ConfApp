@@ -12,7 +12,7 @@
                           @bind-Value="conference.Banner" For="@(() => conference.Banner)" />
             <MudGrid Class="mt-5">
                 <MudItem>
-                    <img src=@conference.Logo>
+                    <img src="/images/@conference.Logo">
                 </MudItem>
                 <MudItem>
                     <InputFile id="fileInput" OnChange="OnInputFileChange" hidden />
