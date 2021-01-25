@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ConfApp.Shared.Admin
 {
-    public partial class ConferenceSection : ComponentBase
+    public partial class SpeakerSection : ComponentBase
     {
         [Inject]
         IDialogService Dialog { get; set; }
@@ -18,14 +18,14 @@ namespace ConfApp.Shared.Admin
         IStorageService StorageService { get; set; }
 
         private string searchString = "";
-        private Conference selectedCoference = null;
-        private IList<Conference> conferences = null;
+        private Speaker selectedSpeaker = null;
+        private IList<Speaker> speakers = null;
         private HashSet<Conference> selectedItems = new HashSet<Conference>();
-        private readonly string imgPath = "images";
+        private readonly string imgPath = "images/speakers";
 
         protected override void OnInitialized()
         {
-            conferences = StorageService.GetConferences().ToList();
+            speakers = StorageService.GetConferences().ToList();
         }
 
         private bool FilterFunc(Conference element)
@@ -49,9 +49,9 @@ namespace ConfApp.Shared.Admin
             if (!result.Cancelled)
             {
                 var updateConfirence = dialog.Result.Result.Data as Conference;
-                var index = conferences.IndexOf(conference);
-                conferences.Remove(conference);
-                conferences.Insert(index, updateConfirence);
+                var index = Conferences.IndexOf(conference);
+                Conferences.Remove(conference);
+                Conferences.Insert(index, updateConfirence);
             }
         }
 
@@ -63,7 +63,7 @@ namespace ConfApp.Shared.Admin
             if (!result.Cancelled)
             {
                 var deletedConfirence = dialog.Result.Result.Data as Conference;
-                conferences.Remove(deletedConfirence);
+                Conferences.Remove(deletedConfirence);
             }
         }
 
@@ -74,7 +74,7 @@ namespace ConfApp.Shared.Admin
             if (!result.Cancelled)
             {
                 var newConfirence = dialog.Result.Result.Data as Conference;
-                conferences.Add(newConfirence);
+                Conferences.Add(newConfirence);
             }
         }
     }

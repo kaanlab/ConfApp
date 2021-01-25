@@ -23,39 +23,17 @@ namespace ConfApp.Shared.Admin
         MudDialogInstance MudDialog { get; set; }
 
         [Parameter] 
-        public Conference conference { get; set; } = new Conference();
+        public Conference Сonference { get; set; } = new Conference();
 
-        private void Cancel()
-        {
-            MudDialog.Cancel();
-        }
+        private readonly string imgPath = "images";
 
-        private async Task Update()
-        {
-            //In a real world scenario this bool would probably be a service to delete the item from api/database
-            var updateConference = await StorageService.UpdateConference(conference);
-            MudDialog.Close(DialogResult.Ok(updateConference));
-            Snackbar.Add("Конференция обновлена!", Severity.Success);
-
-        }
+        void Cancel() => MudDialog.Cancel();
 
         private async Task Delete()
         {
-            var deleteConference = await StorageService.DeleteConference(conference);
+            var deleteConference = await StorageService.DeleteConference(Сonference);
             MudDialog.Close(DialogResult.Ok(deleteConference));
             Snackbar.Add("Конференция удалена!", Severity.Success);
-        }
-
-
-        private void UploadFiles(IFileInfo entrie)
-        {
-            conference.Logo = entrie.Name;
-            //TODO upload the files to the server
-        }
-
-        private async Task OnInputFileChange(InputFileChangeEventArgs e)
-        {
-            conference.Logo = e.File.Name;
         }
     }
 }

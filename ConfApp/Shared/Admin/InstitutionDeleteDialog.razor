@@ -1,0 +1,15 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudTextField Value="@Institution.Name" Label="Название" ReadOnly="true" />
+
+        <MudGrid Class="mt-5">
+            <MudItem>
+                <img src="/@imgPath/@Institution.Logo">
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Отменить</MudButton>
+        <MudButton Color="Color.Info" OnClick="Delete">Удалить</MudButton>
+    </DialogActions>
+</MudDialog>

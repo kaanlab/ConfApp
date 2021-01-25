@@ -21,14 +21,14 @@ namespace ConfApp.Data
             return confierenceEntityEntry.Entity;
         }
 
-        public async ValueTask<Conference> UpdateConference(Conference conference)
+        public async Task<Conference> UpdateConference(Conference conference)
         {
             EntityEntry<Conference> confierenceEntityEntry = this.Conferences.Update(conference);
             await this.SaveChangesAsync();
             return confierenceEntityEntry.Entity;
         }
 
-        public async ValueTask<Conference> DeleteConference(Conference conference)
+        public async Task<Conference> DeleteConference(Conference conference)
         {
             EntityEntry<Conference> confierenceEntityEntry = this.Conferences.Remove(conference);
             await this.SaveChangesAsync();

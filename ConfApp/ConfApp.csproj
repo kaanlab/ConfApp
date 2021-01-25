@@ -14,4 +14,8 @@
     <PackageReference Include="MudBlazor" Version="1.2.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\institutions\" />
+  </ItemGroup>
+
 </Project>

@@ -3,16 +3,10 @@
         <EditForm EditContext="@editContext">
             <DataAnnotationsValidator />
             <MudTextField Label="Название"
-                          @bind-Value="Сonference.Name" For="@(() => Сonference.Name)" />
-            <MudTextField Label="Тема конференции" Class="mt-3"
-                          @bind-Value="Сonference.MainTopic" For="@(() => Сonference.MainTopic)" />
-            <MudTextField Label="Тема конференции (расширенная)" Class="mt-3"
-                          @bind-Value="Сonference.Topic" For="@(() => Сonference.Topic)" />
-            <MudTextField Label="Время и место проведения" Class="mt-3"
-                          @bind-Value="Сonference.Banner" For="@(() => Сonference.Banner)" />
+                          @bind-Value="Institution.Name" For="@(() => Institution.Name)" />
             <MudGrid Class="mt-5">
                 <MudItem>
-                    <img src="/@imgPath/@Сonference.Logo">
+                    <img src="/@imgPath/@Institution.Logo">
                 </MudItem>
                 <MudItem>
                     <InputFile id="fileInput" OnChange="OnInputFileChange" hidden />

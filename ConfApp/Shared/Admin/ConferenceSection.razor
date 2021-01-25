@@ -1,4 +1,4 @@
-﻿<MudTable Class="mt-5" Items="@Conferences" Hover="true" Filter="new Func<Conference,bool>(FilterFunc)" @bind-SelectedItem="selectedCoference">
+﻿<MudTable Class="mt-5" Items="@conferences" Hover="true" Filter="new Func<Conference,bool>(FilterFunc)" @bind-SelectedItem="selectedCoference">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Список конференций</MudText>
         <MudIconButton Icon="@Icons.Material.AddBox" Color="Color.Primary" Size="Size.Large" @onclick="AddConference" />
@@ -19,7 +19,7 @@
         <MudTd DataLabel="Тема конференции">@context.MainTopic</MudTd>
         <MudTd DataLabel="Тема конференции (расширенная)">@context.Topic</MudTd>
         <MudTd DataLabel="Время и место проведения">@context.Banner</MudTd>
-        <MudTd DataLabel="Логотип"><img src="/images/@context.Logo"></MudTd>
+        <MudTd DataLabel="Логотип"><img src="/@imgPath/@context.Logo"></MudTd>
         <MudTd>
             <MudIconButton Icon="@Icons.Material.Edit" Color="Color.Info" OnClick="@((e) => UpdateConference(context))" />
             </MudTd>

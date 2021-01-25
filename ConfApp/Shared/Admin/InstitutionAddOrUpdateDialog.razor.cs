@@ -3,8 +3,6 @@ using ConfApp.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.FileProviders;
 using MudBlazor;
 using System;
 using System.Collections.Generic;
@@ -14,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ConfApp.Shared.Admin
 {
-    public partial class ConferenceAddOrUpdateDialog
+    public partial class InstitutionAddOrUpdateDialog
     {
         [Inject]
         ISnackbar Snackbar { get; set; }
@@ -33,14 +31,14 @@ namespace ConfApp.Shared.Admin
 
         private bool formInvalid = true;
         private EditContext editContext;
-        private readonly string imgPath = "images";
+        private readonly string imgPath = @"images/institutions";
 
         [Parameter]
-        public Conference Сonference { get; set; } = new Conference();
+        public Institution Institution { get; set; } = new Institution();
 
         protected override void OnInitialized()
         {
-            editContext = new EditContext(Сonference);
+            editContext = new EditContext(Institution);
             editContext.OnFieldChanged += HandleFieldChanged;
         }
 
@@ -52,17 +50,17 @@ namespace ConfApp.Shared.Admin
 
         async Task AddOrUpdate()
         {
-            if (Сonference.Id > 0)
+            if (Institution.Id > 0)
             {
-                var updateConference = await StorageService.UpdateConference(Сonference);
-                MudDialog.Close(DialogResult.Ok(updateConference));
-                Snackbar.Add("Конференция обновлена!", Severity.Success);
+                var updateInstitution = await StorageService.UpdateInstitution(Institution);
+                MudDialog.Close(DialogResult.Ok(updateInstitution));
+                Snackbar.Add("Учебное заведение обновлено!", Severity.Success);
             }
             else
             {
-                var newConference = await StorageService.AddConference(Сonference);
-                MudDialog.Close(DialogResult.Ok(newConference));
-                Snackbar.Add("Конференция добавлена!", Severity.Success);
+                var newInstitution = await StorageService.AddInstitution(Institution);
+                MudDialog.Close(DialogResult.Ok(newInstitution));
+                Snackbar.Add("Учебное заведение добавлено!", Severity.Success);
             }
         }
         void Cancel() => MudDialog.Cancel();
@@ -71,7 +69,8 @@ namespace ConfApp.Shared.Admin
         {
             var path = Path.Combine(WebHostEnvironment.WebRootPath, imgPath);
             await FileStorageService.UploadFile(path, e.File);
-            Сonference.Logo = e.File.Name;
+            Institution.Logo = e.File.Name;
         }
-    }
+    }    
 }
+

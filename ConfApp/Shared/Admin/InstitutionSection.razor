@@ -1,0 +1,24 @@
+﻿<MudTable Class="mt-5" Items="@institutions" Hover="true" Filter="new Func<Institution,bool>(FilterFunc)" @bind-SelectedItem="selectedInstitution">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Список учебных заведений</MudText>
+        <MudIconButton Icon="@Icons.Material.AddBox" Color="Color.Primary" Size="Size.Large" @onclick="AddInstitution" />
+        <MudToolBarSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Название</MudTh>
+        <MudTh>Логотип</MudTh>
+        <MudTh></MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Название">@context.Name</MudTd>
+        <MudTd DataLabel="Логотип"><img src="/@imgPath/@context.Logo"></MudTd>
+        <MudTd>
+            <MudIconButton Icon="@Icons.Material.Edit" Color="Color.Info" OnClick="@((e) => UpdateInstitution(context))" />
+        </MudTd>
+        <MudTd>
+            <MudIconButton Icon="@Icons.Material.Delete" Color="Color.Error" OnClick="@((e) => DeleteInstitution(context))" />
+        </MudTd>
+    </RowTemplate>
+</MudTable>

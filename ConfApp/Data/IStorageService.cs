@@ -11,8 +11,8 @@ namespace ConfApp.Data
         // Conference
         IQueryable<Conference> GetConferences();
         Task<Conference> AddConference(Conference conference);
-        ValueTask<Conference> UpdateConference(Conference conference);
-        ValueTask<Conference> DeleteConference(Conference conference);
+        Task<Conference> UpdateConference(Conference conference);
+        Task<Conference> DeleteConference(Conference conference);
 
         // Report
         //ValueTask<IEnumerable<Report>> GetReports();
@@ -21,16 +21,16 @@ namespace ConfApp.Data
         //ValueTask<Report> DeleteReport(Report report);
 
         //// Speaker
-        //ValueTask<IEnumerable<Speaker>> GetSpeakers();
-        //ValueTask<Speaker> AddSpeaker(Speaker speaker);
-        //ValueTask<Speaker> UpdateSpeaker(Speaker speaker);
-        //ValueTask<Speaker> DeleteSpeaker(Speaker speaker);
+        IQueryable<Speaker> GetSpeakers();
+        Task<Speaker> AddSpeaker(Speaker speaker);
+        Task<Speaker> UpdateSpeaker(Speaker speaker);
+        Task<Speaker> DeleteSpeaker(Speaker speaker);
 
         //// Institution
-        //ValueTask<IEnumerable<Institution>> GetInstitutions();
-        //ValueTask<Institution> AddInstitution(Institution institution);
-        //ValueTask<Institution> UpdateInstitution(Institution institution);
-        //ValueTask<Institution> DeleteInstitution(Institution institution);
+        IQueryable<Institution> GetInstitutions();
+        Task<Institution> AddInstitution(Institution institution);
+        Task<Institution> UpdateInstitution(Institution institution);
+        Task<Institution> DeleteInstitution(Institution institution);
 
 
     }
