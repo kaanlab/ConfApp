@@ -20,13 +20,13 @@ namespace ConfApp.Data
         //ValueTask<Report> UpdateReport(Report report);
         //ValueTask<Report> DeleteReport(Report report);
 
-        //// Speaker
+        // Speaker
         IQueryable<Speaker> GetSpeakers();
         Task<Speaker> AddSpeaker(Speaker speaker);
         Task<Speaker> UpdateSpeaker(Speaker speaker);
         Task<Speaker> DeleteSpeaker(Speaker speaker);
 
-        //// Institution
+        // Institution
         IQueryable<Institution> GetInstitutions();
         Task<Institution> AddInstitution(Institution institution);
         Task<Institution> UpdateInstitution(Institution institution);

@@ -15,7 +15,7 @@ namespace ConfApp.Shared.Admin
         IDialogService Dialog { get; set; }
 
         [Inject]
-        IStorageService StorageService { get; set; }
+        ISpeakerService SpeakerService { get; set; }
 
         private string searchString = "";
         private Speaker selectedSpeaker = null;
@@ -25,56 +25,56 @@ namespace ConfApp.Shared.Admin
 
         protected override void OnInitialized()
         {
-            speakers = StorageService.GetConferences().ToList();
+            speakers = SpeakerService.GetSpeakers().ToList();
         }
 
-        private bool FilterFunc(Conference element)
+        private bool FilterFunc(Speaker element)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
-            if (element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (element.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (element.MainTopic.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (element.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if ($"{element.Name} {element.MainTopic}".Contains(searchString))
+            if ($"{element.FirstName} {element.LastName}".Contains(searchString))
                 return true;
             return false;
         }
 
-        private async Task UpdateConference(Conference conference)
+        private async Task UpdateSpeaker(Speaker speaker)
         {
-            var parameters = new DialogParameters { ["conference"] = conference };
-            var dialog = Dialog.Show<ConferenceAddOrUpdateDialog>("Редактирование конференции", parameters);
+            var parameters = new DialogParameters { ["speaker"] = speaker };
+            var dialog = Dialog.Show<SpeakerAddOrUpdateDialog>("Редактирование участника коференции", parameters);
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var updateConfirence = dialog.Result.Result.Data as Conference;
-                var index = Conferences.IndexOf(conference);
-                Conferences.Remove(conference);
-                Conferences.Insert(index, updateConfirence);
+                var updateSpeaker = dialog.Result.Result.Data as Speaker;
+                var index = speakers.IndexOf(speaker);
+                speakers.Remove(speaker);
+                speakers.Insert(index, updateSpeaker);
             }
         }
 
-        private async Task DeleteConference(Conference conference)
+        private async Task DeleteSpeaker(Speaker speaker)
         {
-            var parameters = new DialogParameters { ["conference"] = conference };
-            var dialog = Dialog.Show<ConferenceDeleteDialog>("Удаление конференции", parameters);
+            var parameters = new DialogParameters { ["speaker"] = speaker };
+            var dialog = Dialog.Show<SpeakerDeleteDialog>("Удаление участника конференции", parameters);
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var deletedConfirence = dialog.Result.Result.Data as Conference;
-                Conferences.Remove(deletedConfirence);
+                var deletedSpeaker = dialog.Result.Result.Data as Speaker;
+                speakers.Remove(deletedSpeaker);
             }
         }
 
-        private async Task AddConference()
+        private async Task AddSpeaker()
         {
-            var dialog = Dialog.Show<ConferenceAddOrUpdateDialog>("Новая коференция");
+            var dialog = Dialog.Show<SpeakerAddOrUpdateDialog>("Новая участник коференции");
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var newConfirence = dialog.Result.Result.Data as Conference;
-                Conferences.Add(newConfirence);
+                var newSpeaker = dialog.Result.Result.Data as Speaker;
+                speakers.Add(newSpeaker);
             }
         }
     }

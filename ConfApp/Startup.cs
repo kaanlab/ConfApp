@@ -33,6 +33,9 @@ namespace ConfApp
 
             services.AddDbContext<StorageService>();
             services.AddScoped<IStorageService, StorageService>();
+            services.AddScoped<IConferenceService, ConferenceService>();
+            services.AddScoped<IInstitutionService, InstitutionService>();
+            services.AddScoped<ISpeakerService, SpeakerService>();
             services.AddTransient<IFileStorageService, FileStorageService>();
 
             services.AddMudBlazorDialog();

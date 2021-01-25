@@ -15,7 +15,7 @@ namespace ConfApp.Shared.Admin
         IDialogService Dialog { get; set; }
 
         [Inject]
-        IStorageService StorageService { get; set; }
+        IInstitutionService InstitutionService { get; set; }
 
         private string searchString = "";
         private Institution selectedInstitution = null;
@@ -25,7 +25,7 @@ namespace ConfApp.Shared.Admin
 
         protected override void OnInitialized()
         {
-            institutions = StorageService.GetInstitutions().ToList();
+            institutions = InstitutionService.GetInstitutions().ToList();
         }
 
         private bool FilterFunc(Institution element)

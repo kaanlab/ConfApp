@@ -13,6 +13,7 @@ namespace ConfApp.Models
         public string VideoUrl { get; set; }
 
         //
+        public Conference Conference { get; set; }
         public IEnumerable<Attachment> Attachments { get; set; }
         public IEnumerable<Speaker> Speakers { get; set; }
     }

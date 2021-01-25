@@ -10,5 +10,7 @@ namespace ConfApp.Models
         public int Id { get; set; }
         public string Logo { get; set; }
         public string Name { get; set; }
+
+        IEnumerable<Speaker> Speakers { get; set; }
     }
 }

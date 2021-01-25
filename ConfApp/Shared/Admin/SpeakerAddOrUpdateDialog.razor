@@ -1,0 +1,40 @@
+﻿<MudDialog>
+    <DialogContent>
+        <EditForm EditContext="@editContext">
+            <DataAnnotationsValidator />
+            <MudTextField Label="Фамилия"
+                          @bind-Value="Speaker.LastName" For="@(() => Speaker.LastName)" />
+            <MudTextField Label="Имя" Class="mt-3"
+                          @bind-Value="Speaker.FirstName" For="@(() => Speaker.FirstName)" />
+            <MudTextField Label="Должность" Class="mt-3"
+                          @bind-Value="Speaker.Position" For="@(() => Speaker.Position)" />
+
+            <MudItem xs="12" sm="6" md="4">
+                <MudSelect T="Institution" @bind-Value="Speaker.Institution" Label="Выберете учебное заведение" Variant="Variant.Outlined" ToStringFunc="@converter" OffsetY="true">
+                    @foreach (var item in institutions)
+                    {
+                        <MudSelectItem Value="@item" />
+                    }
+                </MudSelect>
+            </MudItem>
+
+            <MudGrid Class="mt-5">
+                <MudItem>
+                    <img src="/@imgPath/@Speaker.Photo">
+                </MudItem>
+                <MudItem>
+                    <InputFile id="fileInput" OnChange="OnInputFileChange" hidden />
+                    <MudFab HtmlTag="label"
+                            Color="Color.Secondary"
+                            Icon="@Filled.Image"
+                            Label="Загрузить фото"
+                            for="fileInput" />
+                </MudItem>
+            </MudGrid>
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Отменить</MudButton>
+        <MudButton Color="Color.Info" OnClick="AddOrUpdate" Disabled="@formInvalid">Сохранить</MudButton>
+    </DialogActions>
+</MudDialog>

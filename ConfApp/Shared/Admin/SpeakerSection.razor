@@ -1,5 +1,30 @@
-﻿<h3>SpeakerSection</h3>
-
-@code {
-
-}
+﻿<MudTable Class="mt-5" Items="@speakers" Hover="true" Filter="new Func<Speaker,bool>(FilterFunc)" @bind-SelectedItem="selectedSpeaker">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Список участников конференций</MudText>
+        <MudIconButton Icon="@Icons.Material.AddBox" Color="Color.Primary" Size="Size.Large" @onclick="AddSpeaker" />
+        <MudToolBarSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Фамилия</MudTh>
+        <MudTh>Имя</MudTh>
+        <MudTh>Должность</MudTh>
+        <MudTh>Учебное заведение</MudTh>
+        <MudTh>Фото</MudTh>
+        <MudTh></MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Фамилия">@context.LastName</MudTd>
+        <MudTd DataLabel="Имя">@context.FirstName</MudTd>
+        <MudTd DataLabel="Должность">@context.Position</MudTd>
+        <MudTd DataLabel="Учебное заведение">@context.Institution.Name</MudTd>
+        <MudTd DataLabel="Фото"><img src="/@imgPath/@context.Photo"></MudTd>
+        <MudTd>
+            <MudIconButton Icon="@Icons.Material.Edit" Color="Color.Info" OnClick="@((e) => UpdateSpeaker(context))" />
+        </MudTd>
+        <MudTd>
+            <MudIconButton Icon="@Icons.Material.Delete" Color="Color.Error" OnClick="@((e) => DeleteSpeaker(context))" />
+        </MudTd>
+    </RowTemplate>
+</MudTable>

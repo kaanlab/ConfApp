@@ -15,7 +15,7 @@ namespace ConfApp.Shared.Admin
         IDialogService Dialog { get; set; }
 
         [Inject]
-        IStorageService StorageService { get; set; }
+        IConferenceService ConferenceService { get; set; }
 
         private string searchString = "";
         private Conference selectedCoference = null;
@@ -25,7 +25,7 @@ namespace ConfApp.Shared.Admin
 
         protected override void OnInitialized()
         {
-            conferences = StorageService.GetConferences().ToList();
+            conferences = ConferenceService.GetConferences().ToList();
         }
 
         private bool FilterFunc(Conference element)

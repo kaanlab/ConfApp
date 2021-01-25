@@ -17,7 +17,7 @@ namespace ConfApp.Shared.Admin
         ISnackbar Snackbar { get; set; }
 
         [Inject]
-        IStorageService StorageService { get; set; }
+        IConferenceService ConferenceService { get; set; }
 
         [CascadingParameter] 
         MudDialogInstance MudDialog { get; set; }
@@ -31,7 +31,7 @@ namespace ConfApp.Shared.Admin
 
         private async Task Delete()
         {
-            var deleteConference = await StorageService.DeleteConference(Сonference);
+            var deleteConference = await ConferenceService.DeleteConference(Сonference);
             MudDialog.Close(DialogResult.Ok(deleteConference));
             Snackbar.Add("Конференция удалена!", Severity.Success);
         }

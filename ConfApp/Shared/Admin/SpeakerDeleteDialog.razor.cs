@@ -9,29 +9,30 @@ using System.Threading.Tasks;
 
 namespace ConfApp.Shared.Admin
 {
-    public partial class InstitutionDeleteDialog
+    public partial class SpeakerDeleteDialog
     {
         [Inject]
         ISnackbar Snackbar { get; set; }
 
         [Inject]
-        IInstitutionService InstitutionService { get; set; }
+        ISpeakerService SpeakerService { get; set; }
 
         [CascadingParameter]
         MudDialogInstance MudDialog { get; set; }
 
         [Parameter]
-        public Institution Institution { get; set; } = new Institution();
+        public Speaker Speaker { get; set; } = new Speaker();
 
-        private readonly string imgPath = @"images/institutions";
+        private readonly string imgPath = @"images/speakers";
 
         void Cancel() => MudDialog.Cancel();
 
         private async Task Delete()
         {
-            var deleteInstitution = await InstitutionService.DeleteInstitution(Institution);
-            MudDialog.Close(DialogResult.Ok(deleteInstitution));
-            Snackbar.Add("Учебное заведение удалено!", Severity.Success);
+            var deleteSpeaker = await SpeakerService.DeleteSpeaker(Speaker);
+            MudDialog.Close(DialogResult.Ok(deleteSpeaker));
+            Snackbar.Add("Участник конференции удален!", Severity.Success);
         }
     }
 }
+

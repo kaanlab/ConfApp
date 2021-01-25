@@ -18,7 +18,7 @@ namespace ConfApp.Shared.Admin
         ISnackbar Snackbar { get; set; }
 
         [Inject]
-        IStorageService StorageService { get; set; }
+        IInstitutionService InstitutionService { get; set; }
 
         [Inject]
         IFileStorageService FileStorageService { get; set; }
@@ -52,13 +52,13 @@ namespace ConfApp.Shared.Admin
         {
             if (Institution.Id > 0)
             {
-                var updateInstitution = await StorageService.UpdateInstitution(Institution);
+                var updateInstitution = await InstitutionService.UpdateInstitution(Institution);
                 MudDialog.Close(DialogResult.Ok(updateInstitution));
                 Snackbar.Add("Учебное заведение обновлено!", Severity.Success);
             }
             else
             {
-                var newInstitution = await StorageService.AddInstitution(Institution);
+                var newInstitution = await InstitutionService.AddInstitution(Institution);
                 MudDialog.Close(DialogResult.Ok(newInstitution));
                 Snackbar.Add("Учебное заведение добавлено!", Severity.Success);
             }

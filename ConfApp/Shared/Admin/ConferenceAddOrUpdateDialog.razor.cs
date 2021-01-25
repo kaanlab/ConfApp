@@ -20,7 +20,7 @@ namespace ConfApp.Shared.Admin
         ISnackbar Snackbar { get; set; }
 
         [Inject]
-        IStorageService StorageService { get; set; }
+        IConferenceService ConferenceService { get; set; }
 
         [Inject]
         IFileStorageService FileStorageService { get; set; }
@@ -54,13 +54,13 @@ namespace ConfApp.Shared.Admin
         {
             if (Сonference.Id > 0)
             {
-                var updateConference = await StorageService.UpdateConference(Сonference);
+                var updateConference = await ConferenceService.UpdateConference(Сonference);
                 MudDialog.Close(DialogResult.Ok(updateConference));
                 Snackbar.Add("Конференция обновлена!", Severity.Success);
             }
             else
             {
-                var newConference = await StorageService.AddConference(Сonference);
+                var newConference = await ConferenceService.AddConference(Сonference);
                 MudDialog.Close(DialogResult.Ok(newConference));
                 Snackbar.Add("Конференция добавлена!", Severity.Success);
             }
