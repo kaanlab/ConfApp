@@ -13,7 +13,7 @@ namespace ConfApp.Data
         public DbSet<Report> Reports { get; set; }
 
         public IQueryable<Report> GetReports() => 
-            this.Reports.Include(o => o.Speakers).Include(o => o.Attachments).AsNoTracking();
+            this.Reports.Include(o => o.Speakers).Include(o => o.Conference).Include(o => o.Attachments).AsNoTracking();
 
         public async Task<Report> AddReport(Report report)
         {
@@ -24,6 +24,7 @@ namespace ConfApp.Data
 
         public async Task<Report> UpdateReport(Report report)
         {
+            this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             EntityEntry<Report> reportEntityEntry = this.Reports.Update(report);
             await this.SaveChangesAsync();
             return reportEntityEntry.Entity;

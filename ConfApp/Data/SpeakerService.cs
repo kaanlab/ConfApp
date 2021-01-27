@@ -18,6 +18,7 @@ namespace ConfApp.Data
         public async Task<Speaker> AddSpeaker(Speaker speaker) => await _storageService.AddSpeaker(speaker);
         public async Task<Speaker> DeleteSpeaker(Speaker speaker) => await _storageService.DeleteSpeaker(speaker);
         public IQueryable<Speaker> GetSpeakers() => _storageService.GetSpeakers();
+        public IQueryable<Speaker> GetSpeakersIncludeInstitutions() => _storageService.GetSpeakersIncludeInstitutions();
         public async Task<Speaker> UpdateSpeaker(Speaker speaker) => await _storageService.UpdateSpeaker(speaker);
     }
 }

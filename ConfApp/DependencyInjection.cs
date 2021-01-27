@@ -14,10 +14,10 @@ namespace ConfApp
             services.AddDbContext<StorageService>();
             services.AddScoped<IStorageService, StorageService>();
 
-            services.AddTransient<IConferenceService, ConferenceService>();
-            services.AddTransient<IInstitutionService, InstitutionService>();
-            services.AddTransient<ISpeakerService, SpeakerService>();
-            services.AddTransient<IReportService, ReportService>();
+            services.AddScoped<IConferenceService, ConferenceService>();
+            services.AddScoped<IInstitutionService, InstitutionService>();
+            services.AddScoped<ISpeakerService, SpeakerService>();
+            services.AddScoped<IReportService, ReportService>();
 
             return services;
         }

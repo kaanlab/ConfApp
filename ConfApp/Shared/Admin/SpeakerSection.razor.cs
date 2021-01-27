@@ -25,7 +25,7 @@ namespace ConfApp.Shared.Admin
 
         protected override void OnInitialized()
         {
-            speakers = SpeakerService.GetSpeakers().ToList();
+            speakers = SpeakerService.GetSpeakersIncludeInstitutions().ToList();
         }
 
         private bool FilterFunc(Speaker element)

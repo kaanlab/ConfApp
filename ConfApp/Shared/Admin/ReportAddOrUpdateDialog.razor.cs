@@ -13,16 +13,10 @@ using System.Threading.Tasks;
 
 namespace ConfApp.Shared.Admin
 {
-    public partial class ReportAddOrUpdateDialog 
+    public partial class ReportAddOrUpdateDialog
     {
         [Inject]
-        ISnackbar Snackbar { get; set; }
-
-        [Inject]
         ISpeakerService SpeakerService { get; set; }
-
-        [Inject]
-        IReportService ReportService { get; set; }
 
         [Inject]
         IConferenceService ConferenceService { get; set; }
@@ -36,6 +30,9 @@ namespace ConfApp.Shared.Admin
         [CascadingParameter]
         MudDialogInstance MudDialog { get; set; }
 
+        [Parameter]
+        public Report Report { get; set; } = new Report() { };
+
         private bool formInvalid = true;
         private EditContext editContext;
         private readonly string imgPath = @"images/speakers";
@@ -45,9 +42,6 @@ namespace ConfApp.Shared.Admin
         private HashSet<Speaker> selectedSpeakers { get; set; } = new HashSet<Speaker>() { };
         private Conference selectedConference { get; set; } = new Conference() { };
 
-
-        [Parameter]
-        public Report Report { get; set; } = new Report() { };
 
         protected override void OnInitialized()
         {
@@ -67,27 +61,11 @@ namespace ConfApp.Shared.Admin
             StateHasChanged();
         }
 
-        async Task AddOrUpdate()
+        void AddOrUpdate()
         {
-            if (Report.Id > 0)
-            {
-                Report.Speakers = selectedSpeakers;
-                Report.Conference = selectedConference;
-                var updateReport = await ReportService.UpdateReport(Report);
-                MudDialog.Close(DialogResult.Ok(updateReport));
-                Snackbar.Add("Информация о докладе обновлена!", Severity.Success);
-            }
-            else
-            {
-                await ReportService.AddReport(Report);
-
-                Report.Speakers = selectedSpeakers;
-                Report.Conference = selectedConference;
-
-                var newReport = await ReportService.UpdateReport(Report);
-                MudDialog.Close(DialogResult.Ok(newReport));
-                Snackbar.Add("Доклад добавлен!", Severity.Success);
-            }
+            Report.Speakers = selectedSpeakers;
+            Report.Conference = selectedConference;
+            MudDialog.Close(DialogResult.Ok(Report));
         }
         void Cancel() => MudDialog.Cancel();
 

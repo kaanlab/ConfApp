@@ -12,10 +12,10 @@ namespace ConfApp.Shared.Admin
     public partial class ReportSection : ComponentBase
     {
         [Inject]
-        IDialogService Dialog { get; set; }
+        ISnackbar Snackbar { get; set; }
 
         [Inject]
-        ISpeakerService SpeakerService { get; set; }
+        IDialogService Dialog { get; set; }
 
         [Inject]
         IReportService ReportService { get; set; }
@@ -23,8 +23,8 @@ namespace ConfApp.Shared.Admin
         private string searchString = "";
         private Report selectedReport = null;
         private IList<Report> reports = null;
-        private HashSet<Report> selectedItems = new HashSet<Report>();
         //private readonly string imgPath = "images";
+
 
         protected override void OnInitialized()
         {
@@ -42,6 +42,18 @@ namespace ConfApp.Shared.Admin
             return false;
         }
 
+        private async Task AddReport()
+        {
+            var dialog = Dialog.Show<ReportAddOrUpdateDialog>("Новый доклад");
+            var result = await dialog.Result;
+            if (!result.Cancelled)
+            {
+                var addedReport = await ReportService.AddReport(dialog.Result.Result.Data as Report);
+                reports.Add(addedReport);
+                Snackbar.Add("Новый доклад успешно добавлен!", Severity.Success);
+            }
+        }
+
         private async Task UpdateReport(Report report)
         {
             var parameters = new DialogParameters { ["report"] = report };
@@ -49,10 +61,11 @@ namespace ConfApp.Shared.Admin
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var updateReport = dialog.Result.Result.Data as Report;
+                var updatedReport = await ReportService.UpdateReport(dialog.Result.Result.Data as Report);
                 var index = reports.IndexOf(report);
                 reports.Remove(report);
-                reports.Insert(index, updateReport);
+                reports.Insert(index, updatedReport);
+                Snackbar.Add("Информация о докладе успешно обновлена!", Severity.Success);
             }
         }
 
@@ -63,19 +76,9 @@ namespace ConfApp.Shared.Admin
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var deletedReport = dialog.Result.Result.Data as Report;
+                var deletedReport = await ReportService.DeleteReport(dialog.Result.Result.Data as Report);
                 reports.Remove(deletedReport);
-            }
-        }
-
-        private async Task AddReport()
-        {
-            var dialog = Dialog.Show<ReportAddOrUpdateDialog>("Новый доклад");
-            var result = await dialog.Result;
-            if (!result.Cancelled)
-            {
-                var newReport = dialog.Result.Result.Data as Report;
-                reports.Add(newReport);
+                Snackbar.Add("Информация о докладе удалена!", Severity.Success);
             }
         }
     }
