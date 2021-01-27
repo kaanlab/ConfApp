@@ -1,0 +1,36 @@
+﻿<MudTable Class="my-5" Items="@reports" Hover="true" Filter="new Func<Report,bool>(FilterFunc)" @bind-SelectedItem="selectedReport">
+    <ToolBarContent>
+        <MudIconButton Icon="@Icons.Material.AddBox" Color="Color.Primary" Size="Size.Large" @onclick="AddReport" Class="mr-3" />
+        <MudText Typo="Typo.h6">Доклады</MudText>
+        <MudToolBarSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Поиск" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Дата</MudTh>
+        <MudTh>Тема доклада</MudTh>
+        <MudTh>Докладчики</MudTh>
+        <MudTh>Ссылка на доклад</MudTh>
+        <MudTh></MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Дата">@context.ReportDate</MudTd>
+        <MudTd DataLabel="Тема доклада">@context.Topic</MudTd>
+        <MudTd DataLabel="Докладчики">
+            @foreach (var speaker in context.Speakers)
+            {
+                <MudChip Color="Color.Info">
+                    @speaker.LastName @speaker.FirstName;
+                </MudChip>
+            }
+        </MudTd>
+        <MudTd DataLabel="Ссылка на доклад">@context.VideoUrl</MudTd>
+
+        <MudTd>
+            <MudIconButton Icon="@Icons.Material.Edit" Color="Color.Info" OnClick="@((e) => UpdateReport(context))" />
+        </MudTd>
+        <MudTd>
+            <MudIconButton Icon="@Icons.Material.Delete" Color="Color.Error" OnClick="@((e) => DeleteReport(context))" />
+        </MudTd>
+    </RowTemplate>
+</MudTable>

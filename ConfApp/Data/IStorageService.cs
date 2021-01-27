@@ -15,10 +15,10 @@ namespace ConfApp.Data
         Task<Conference> DeleteConference(Conference conference);
 
         // Report
-        //ValueTask<IEnumerable<Report>> GetReports();
-        //ValueTask<Report> AddReport(Report report);
-        //ValueTask<Report> UpdateReport(Report report);
-        //ValueTask<Report> DeleteReport(Report report);
+        IQueryable<Report> GetReports();
+        Task<Report> AddReport(Report report);
+        Task<Report> UpdateReport(Report report);
+        Task<Report> DeleteReport(Report report);
 
         // Speaker
         IQueryable<Speaker> GetSpeakers();

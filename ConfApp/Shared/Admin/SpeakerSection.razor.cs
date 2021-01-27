@@ -20,7 +20,7 @@ namespace ConfApp.Shared.Admin
         private string searchString = "";
         private Speaker selectedSpeaker = null;
         private IList<Speaker> speakers = null;
-        private HashSet<Conference> selectedItems = new HashSet<Conference>();
+        private HashSet<Speaker> selectedItems = new HashSet<Speaker>();
         private readonly string imgPath = "images/speakers";
 
         protected override void OnInitialized()

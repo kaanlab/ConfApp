@@ -10,7 +10,7 @@
                           @bind-Value="Speaker.Position" For="@(() => Speaker.Position)" />
 
             <MudItem xs="12" sm="6" md="4">
-                <MudSelect T="Institution" @bind-Value="Speaker.Institution" Label="Выберете учебное заведение" Variant="Variant.Outlined" ToStringFunc="@converter" OffsetY="true">
+                <MudSelect T="Institution" @bind-Value="selectedInstitution" Label="Выберете учебное заведение" Variant="Variant.Outlined" ToStringFunc="@institutionConverter" OffsetY="true">
                     @foreach (var item in institutions)
                     {
                         <MudSelectItem Value="@item" />
@@ -35,6 +35,6 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Отменить</MudButton>
-        <MudButton Color="Color.Info" OnClick="AddOrUpdate" Disabled="@formInvalid">Сохранить</MudButton>
+        <MudButton ButtonType="ButtonType.Submit" Color="Color.Info" OnClick="AddOrUpdate" Disabled="@formInvalid">Сохранить</MudButton>
     </DialogActions>
 </MudDialog>

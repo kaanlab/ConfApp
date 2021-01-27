@@ -268,3 +268,9 @@ ul li {
         right: 0.75rem;
         top: 0.5rem;
     }
+/*
+ * 4.0 BG for Control Panel
+*/
+.bg-control-panel {
+    background-color: whitesmoke;
+}

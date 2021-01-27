@@ -21,12 +21,9 @@ namespace ConfApp.Models
         [Required(ErrorMessage = "Это поле обязательно для заполнения, миннимальная длина 8 символов")]
         [MinLength(8)]
         public string Banner { get; set; }
-        //[Required(ErrorMessage = "Это поле обязательно для заполнения, миннимальная длина 8 символов")]
-        //[MinLength(8)]
         public string Logo { get; set; }
 
-
+        //
         IEnumerable<Report> Reports { get; set; }
-
     }
 }

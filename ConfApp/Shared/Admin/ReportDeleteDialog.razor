@@ -1,0 +1,19 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudTextField Value="@Report.ReportDate" Label="Дата" ReadOnly="true" />
+        <MudTextField Value="@Report.Topic" Label="Тема доклада" ReadOnly="true" />
+        <div class="d-flex flex-column py-1">
+            @foreach (var speaker in Report.Speakers)
+            {
+                <MudChip Color="Color.Info">
+                    @speaker.LastName @speaker.FirstName;
+                </MudChip>
+            }
+        </div>
+        <MudTextField Value="@Report.VideoUrl" Label="Ссылка на видео" ReadOnly="true" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Отменить</MudButton>
+        <MudButton Color="Color.Info" OnClick="Delete">Удалить</MudButton>
+    </DialogActions>
+</MudDialog>

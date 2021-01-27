@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ConfApp.Shared.Admin
 {
-    public partial class SpeakerAddOrUpdateDialog
+    public partial class SpeakerAddOrUpdateDialog 
     {
         [Inject]
         ISnackbar Snackbar { get; set; }
@@ -33,6 +33,8 @@ namespace ConfApp.Shared.Admin
         [CascadingParameter]
         MudDialogInstance MudDialog { get; set; }
 
+        private Institution selectedInstitution { get; set; } = new Institution() { };
+
         private bool formInvalid = true;
         private EditContext editContext;
         private readonly string imgPath = @"images/speakers";
@@ -46,6 +48,8 @@ namespace ConfApp.Shared.Admin
             editContext = new EditContext(Speaker);
             editContext.OnFieldChanged += HandleFieldChanged;
             institutions = InstitutionService.GetInstitutions().ToImmutableArray();
+            if (Speaker.Institution is { })
+                selectedInstitution = Speaker.Institution;
         }
 
         private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
@@ -58,23 +62,18 @@ namespace ConfApp.Shared.Admin
         {
             if (Speaker.Id > 0)
             {
+                Speaker.Institution = selectedInstitution;
                 var updateSpeaker = await SpeakerService.UpdateSpeaker(Speaker);
                 MudDialog.Close(DialogResult.Ok(updateSpeaker));
                 Snackbar.Add("Информация об участнике конференции обновлена!", Severity.Success);
             }
             else
             {
-                var institution = new Institution()
-                {
-                    Id = Speaker.Institution.Id,
-                    Name = Speaker.Institution.Name,
-                    Logo = Speaker.Institution.Logo
-                };
-                Speaker.Institution = null;
                 await SpeakerService.AddSpeaker(Speaker);
 
-                Speaker.Institution = institution;
+                Speaker.Institution = selectedInstitution;
                 var newSpeaker = await SpeakerService.UpdateSpeaker(Speaker);
+
                 MudDialog.Close(DialogResult.Ok(newSpeaker));
                 Snackbar.Add("Участник конференции добавлен!", Severity.Success);
             }
@@ -88,6 +87,6 @@ namespace ConfApp.Shared.Admin
             Speaker.Photo = e.File.Name;
         }
 
-        Func<Institution, string> converter = p => p?.Name;
+        Func<Institution, string> institutionConverter = p => p?.Name;
     }
 }

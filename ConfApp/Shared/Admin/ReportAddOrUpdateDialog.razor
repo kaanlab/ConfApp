@@ -1,0 +1,32 @@
+﻿<MudDialog>
+    <DialogContent>
+        <EditForm EditContext="@editContext">
+            <DataAnnotationsValidator />
+            <MudTextField Label="Дата"
+                          @bind-Value="Report.ReportDate" For="@(() => Report.ReportDate)" />
+            <MudTextField Label="Тема доклада" Class="mt-3"
+                          @bind-Value="Report.Topic" For="@(() => Report.Topic)" />
+
+            <MudItem xs="12" md="12">
+                <MudSelect T="Speaker" Label="Докладчики" HelperText="Выберете участников доклада" MultiSelection="true" @bind-Value="value" @bind-SelectedValues="selectedSpeakers" ToStringFunc="speakerConverter">
+                    @foreach (var speaker in speakers)
+                    {
+                        <MudSelectItem T="Speaker" Value="@speaker">@speaker.LastName @speaker.FirstName</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>            
+            <MudItem xs="12" sm="6" md="4">
+                <MudSelect T="Conference" @bind-Value="selectedConference" Label="Выберете конференцию" Variant="Variant.Outlined" ToStringFunc="@conferenceConverter" OffsetY="true">
+                    @foreach (var item in conferences)
+                    {
+                        <MudSelectItem Value="@item" />
+                    }
+                </MudSelect>
+            </MudItem>
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Отменить</MudButton>
+        <MudButton ButtonType="ButtonType.Submit" Color="Color.Info" OnClick="AddOrUpdate" Disabled="@formInvalid">Сохранить</MudButton>
+    </DialogActions>
+</MudDialog>

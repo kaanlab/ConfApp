@@ -1,9 +1,9 @@
-﻿<MudTable Class="mt-5" Items="@institutions" Hover="true" Filter="new Func<Institution,bool>(FilterFunc)" @bind-SelectedItem="selectedInstitution">
+﻿<MudTable Class="my-5" Items="@institutions" Hover="true" Filter="new Func<Institution,bool>(FilterFunc)" @bind-SelectedItem="selectedInstitution">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Список учебных заведений</MudText>
-        <MudIconButton Icon="@Icons.Material.AddBox" Color="Color.Primary" Size="Size.Large" @onclick="AddInstitution" />
+        <MudIconButton Icon="@Icons.Material.AddBox" Color="Color.Primary" Size="Size.Large" @onclick="AddInstitution" Class="mr-3" />
+        <MudText Typo="Typo.h6">Учебные заведения</MudText>
         <MudToolBarSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField @bind-Value="searchString" Placeholder="Поиск" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
         <MudTh>Название</MudTh>

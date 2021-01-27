@@ -3,14 +3,16 @@ using System;
 using ConfApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConfApp.Migrations
 {
     [DbContext(typeof(StorageService))]
-    partial class StorageServiceModelSnapshot : ModelSnapshot
+    [Migration("20210126125301_AddReports")]
+    partial class AddReports
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,26 +135,16 @@ namespace ConfApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("ReportId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("InstitutionId");
 
+                    b.HasIndex("ReportId");
+
                     b.ToTable("Speakers");
-                });
-
-            modelBuilder.Entity("ReportSpeaker", b =>
-                {
-                    b.Property<int>("ReportsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SpeakersId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ReportsId", "SpeakersId");
-
-                    b.HasIndex("SpeakersId");
-
-                    b.ToTable("ReportSpeaker");
                 });
 
             modelBuilder.Entity("ConfApp.Models.Attachment", b =>
@@ -177,27 +169,18 @@ namespace ConfApp.Migrations
                         .WithMany()
                         .HasForeignKey("InstitutionId");
 
-                    b.Navigation("Institution");
-                });
-
-            modelBuilder.Entity("ReportSpeaker", b =>
-                {
                     b.HasOne("ConfApp.Models.Report", null)
-                        .WithMany()
-                        .HasForeignKey("ReportsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Speakers")
+                        .HasForeignKey("ReportId");
 
-                    b.HasOne("ConfApp.Models.Speaker", null)
-                        .WithMany()
-                        .HasForeignKey("SpeakersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Institution");
                 });
 
             modelBuilder.Entity("ConfApp.Models.Report", b =>
                 {
                     b.Navigation("Attachments");
+
+                    b.Navigation("Speakers");
                 });
 #pragma warning restore 612, 618
         }

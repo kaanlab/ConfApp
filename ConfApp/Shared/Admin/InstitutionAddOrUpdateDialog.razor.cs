@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ConfApp.Shared.Admin
 {
-    public partial class InstitutionAddOrUpdateDialog
+    public partial class InstitutionAddOrUpdateDialog 
     {
         [Inject]
         ISnackbar Snackbar { get; set; }
@@ -71,6 +71,7 @@ namespace ConfApp.Shared.Admin
             await FileStorageService.UploadFile(path, e.File);
             Institution.Logo = e.File.Name;
         }
+
     }    
 }
 
