@@ -17,12 +17,6 @@ namespace ConfApp.Shared.Admin
     public partial class ConferenceAddOrUpdateDialog
     {
         [Inject]
-        ISnackbar Snackbar { get; set; }
-
-        [Inject]
-        IConferenceService ConferenceService { get; set; }
-
-        [Inject]
         IFileStorageService FileStorageService { get; set; }
 
         [Inject]
@@ -31,12 +25,13 @@ namespace ConfApp.Shared.Admin
         [CascadingParameter]
         MudDialogInstance MudDialog { get; set; }
 
+        [Parameter]
+        public Conference Сonference { get; set; } = new Conference();
+
         private bool formInvalid = true;
         private EditContext editContext;
         private readonly string imgPath = "images";
 
-        [Parameter]
-        public Conference Сonference { get; set; } = new Conference();
 
         protected override void OnInitialized()
         {
@@ -50,21 +45,8 @@ namespace ConfApp.Shared.Admin
             StateHasChanged();
         }
 
-        async Task AddOrUpdate()
-        {
-            if (Сonference.Id > 0)
-            {
-                var updateConference = await ConferenceService.UpdateConference(Сonference);
-                MudDialog.Close(DialogResult.Ok(updateConference));
-                Snackbar.Add("Конференция обновлена!", Severity.Success);
-            }
-            else
-            {
-                var newConference = await ConferenceService.AddConference(Сonference);
-                MudDialog.Close(DialogResult.Ok(newConference));
-                Snackbar.Add("Конференция добавлена!", Severity.Success);
-            }
-        }
+        void AddOrUpdate() => MudDialog.Close(DialogResult.Ok(Сonference));
+        
         void Cancel() => MudDialog.Cancel();
 
         async Task OnInputFileChange(InputFileChangeEventArgs e)

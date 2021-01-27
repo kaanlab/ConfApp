@@ -13,28 +13,17 @@ namespace ConfApp.Shared.Admin
 {
     public partial class ConferenceDeleteDialog
     {
-        [Inject]
-        ISnackbar Snackbar { get; set; }
-
-        [Inject]
-        IConferenceService ConferenceService { get; set; }
-
-        [CascadingParameter] 
+        [CascadingParameter]
         MudDialogInstance MudDialog { get; set; }
 
-        [Parameter] 
+        [Parameter]
         public Conference Сonference { get; set; } = new Conference();
 
         private readonly string imgPath = "images";
 
         void Cancel() => MudDialog.Cancel();
 
-        private async Task Delete()
-        {
-            var deleteConference = await ConferenceService.DeleteConference(Сonference);
-            MudDialog.Close(DialogResult.Ok(deleteConference));
-            Snackbar.Add("Конференция удалена!", Severity.Success);
-        }
+        void Delete() => MudDialog.Close(DialogResult.Ok(Сonference));
     }
 }
 

@@ -11,12 +11,6 @@ namespace ConfApp.Shared.Admin
 {
     public partial class InstitutionDeleteDialog
     {
-        [Inject]
-        ISnackbar Snackbar { get; set; }
-
-        [Inject]
-        IInstitutionService InstitutionService { get; set; }
-
         [CascadingParameter]
         MudDialogInstance MudDialog { get; set; }
 
@@ -26,12 +20,6 @@ namespace ConfApp.Shared.Admin
         private readonly string imgPath = @"images/institutions";
 
         void Cancel() => MudDialog.Cancel();
-
-        private async Task Delete()
-        {
-            var deleteInstitution = await InstitutionService.DeleteInstitution(Institution);
-            MudDialog.Close(DialogResult.Ok(deleteInstitution));
-            Snackbar.Add("Учебное заведение удалено!", Severity.Success);
-        }
+        void Delete() => MudDialog.Close(DialogResult.Ok(Institution));
     }
 }

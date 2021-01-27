@@ -15,12 +15,6 @@ namespace ConfApp.Shared.Admin
     public partial class InstitutionAddOrUpdateDialog 
     {
         [Inject]
-        ISnackbar Snackbar { get; set; }
-
-        [Inject]
-        IInstitutionService InstitutionService { get; set; }
-
-        [Inject]
         IFileStorageService FileStorageService { get; set; }
 
         [Inject]
@@ -29,12 +23,13 @@ namespace ConfApp.Shared.Admin
         [CascadingParameter]
         MudDialogInstance MudDialog { get; set; }
 
+        [Parameter]
+        public Institution Institution { get; set; } = new Institution();
+
         private bool formInvalid = true;
         private EditContext editContext;
         private readonly string imgPath = @"images/institutions";
 
-        [Parameter]
-        public Institution Institution { get; set; } = new Institution();
 
         protected override void OnInitialized()
         {
@@ -48,21 +43,7 @@ namespace ConfApp.Shared.Admin
             StateHasChanged();
         }
 
-        async Task AddOrUpdate()
-        {
-            if (Institution.Id > 0)
-            {
-                var updateInstitution = await InstitutionService.UpdateInstitution(Institution);
-                MudDialog.Close(DialogResult.Ok(updateInstitution));
-                Snackbar.Add("Учебное заведение обновлено!", Severity.Success);
-            }
-            else
-            {
-                var newInstitution = await InstitutionService.AddInstitution(Institution);
-                MudDialog.Close(DialogResult.Ok(newInstitution));
-                Snackbar.Add("Учебное заведение добавлено!", Severity.Success);
-            }
-        }
+        void AddOrUpdate() => MudDialog.Close(DialogResult.Ok(Institution));
         void Cancel() => MudDialog.Cancel();
 
         async Task OnInputFileChange(InputFileChangeEventArgs e)
