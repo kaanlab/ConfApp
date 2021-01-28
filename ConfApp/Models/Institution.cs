@@ -14,6 +14,7 @@ namespace ConfApp.Models
         [MinLength(8)]
         public string Name { get; set; }
 
+        //
         IEnumerable<Speaker> Speakers { get; set; }
     }
 }

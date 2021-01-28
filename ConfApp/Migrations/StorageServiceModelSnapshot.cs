@@ -133,26 +133,16 @@ namespace ConfApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("ReportId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("InstitutionId");
 
+                    b.HasIndex("ReportId");
+
                     b.ToTable("Speakers");
-                });
-
-            modelBuilder.Entity("ReportSpeaker", b =>
-                {
-                    b.Property<int>("ReportsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SpeakersId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ReportsId", "SpeakersId");
-
-                    b.HasIndex("SpeakersId");
-
-                    b.ToTable("ReportSpeaker");
                 });
 
             modelBuilder.Entity("ConfApp.Models.Attachment", b =>
@@ -177,27 +167,20 @@ namespace ConfApp.Migrations
                         .WithMany()
                         .HasForeignKey("InstitutionId");
 
+                    b.HasOne("ConfApp.Models.Report", "Report")
+                        .WithMany("Speakers")
+                        .HasForeignKey("ReportId");
+
                     b.Navigation("Institution");
-                });
 
-            modelBuilder.Entity("ReportSpeaker", b =>
-                {
-                    b.HasOne("ConfApp.Models.Report", null)
-                        .WithMany()
-                        .HasForeignKey("ReportsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ConfApp.Models.Speaker", null)
-                        .WithMany()
-                        .HasForeignKey("SpeakersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Report");
                 });
 
             modelBuilder.Entity("ConfApp.Models.Report", b =>
                 {
                     b.Navigation("Attachments");
+
+                    b.Navigation("Speakers");
                 });
 #pragma warning restore 612, 618
         }

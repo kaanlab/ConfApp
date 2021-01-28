@@ -17,14 +17,12 @@ namespace ConfApp.Data
 
         public IQueryable<Report> GetReports() => _storageService.GetReports();
 
-        public async Task<Report> AddReport(Report report) 
+        public async Task<Report> AddReport(Report report)
         {
-            var conference = report.Conference;
-            var speakers = report.Speakers;
             var newReport = new Report() { ReportDate = report.ReportDate, Topic = report.Topic, VideoUrl = report.VideoUrl };
             var addedReport = await _storageService.AddReport(newReport);
-            addedReport.Conference = conference;
-            addedReport.Speakers = speakers;
+            addedReport.Conference = report.Conference;
+            addedReport.Speakers = report.Speakers;
             return await _storageService.UpdateReport(addedReport);
         }
 
