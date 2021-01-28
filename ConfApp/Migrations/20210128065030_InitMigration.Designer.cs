@@ -9,14 +9,33 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConfApp.Migrations
 {
     [DbContext(typeof(StorageService))]
-    [Migration("20210125114433_AddSpeakers")]
-    partial class AddSpeakers
+    [Migration("20210128065030_InitMigration")]
+    partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.2");
+
+            modelBuilder.Entity("ConfApp.Models.Attachment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ReportId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReportId");
+
+                    b.ToTable("Attachment");
+                });
 
             modelBuilder.Entity("ConfApp.Models.Conference", b =>
                 {
@@ -58,11 +77,38 @@ namespace ConfApp.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("Institutions");
+                });
+
+            modelBuilder.Entity("ConfApp.Models.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ConferenceId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("ReportDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("VideoUrl")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConferenceId");
+
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("ConfApp.Models.Speaker", b =>
@@ -72,25 +118,49 @@ namespace ConfApp.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("InstitutionId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Photo")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Position")
+                        .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("ReportId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("InstitutionId");
 
+                    b.HasIndex("ReportId");
+
                     b.ToTable("Speakers");
+                });
+
+            modelBuilder.Entity("ConfApp.Models.Attachment", b =>
+                {
+                    b.HasOne("ConfApp.Models.Report", null)
+                        .WithMany("Attachments")
+                        .HasForeignKey("ReportId");
+                });
+
+            modelBuilder.Entity("ConfApp.Models.Report", b =>
+                {
+                    b.HasOne("ConfApp.Models.Conference", "Conference")
+                        .WithMany()
+                        .HasForeignKey("ConferenceId");
+
+                    b.Navigation("Conference");
                 });
 
             modelBuilder.Entity("ConfApp.Models.Speaker", b =>
@@ -99,7 +169,20 @@ namespace ConfApp.Migrations
                         .WithMany()
                         .HasForeignKey("InstitutionId");
 
+                    b.HasOne("ConfApp.Models.Report", "Report")
+                        .WithMany("Speakers")
+                        .HasForeignKey("ReportId");
+
                     b.Navigation("Institution");
+
+                    b.Navigation("Report");
+                });
+
+            modelBuilder.Entity("ConfApp.Models.Report", b =>
+                {
+                    b.Navigation("Attachments");
+
+                    b.Navigation("Speakers");
                 });
 #pragma warning restore 612, 618
         }

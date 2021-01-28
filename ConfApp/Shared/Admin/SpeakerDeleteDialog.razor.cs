@@ -11,12 +11,6 @@ namespace ConfApp.Shared.Admin
 {
     public partial class SpeakerDeleteDialog
     {
-        [Inject]
-        ISnackbar Snackbar { get; set; }
-
-        [Inject]
-        ISpeakerService SpeakerService { get; set; }
-
         [CascadingParameter]
         MudDialogInstance MudDialog { get; set; }
 
@@ -26,13 +20,7 @@ namespace ConfApp.Shared.Admin
         private readonly string imgPath = @"images/speakers";
 
         void Cancel() => MudDialog.Cancel();
-
-        private async Task Delete()
-        {
-            var deleteSpeaker = await SpeakerService.DeleteSpeaker(Speaker);
-            MudDialog.Close(DialogResult.Ok(deleteSpeaker));
-            Snackbar.Add("Участник конференции удален!", Severity.Success);
-        }
+        void Delete() => MudDialog.Close(DialogResult.Ok(Speaker));
     }
 }
 

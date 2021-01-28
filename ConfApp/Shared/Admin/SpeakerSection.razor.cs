@@ -12,6 +12,9 @@ namespace ConfApp.Shared.Admin
     public partial class SpeakerSection : ComponentBase
     {
         [Inject]
+        ISnackbar Snackbar { get; set; }
+
+        [Inject]
         IDialogService Dialog { get; set; }
 
         [Inject]
@@ -25,7 +28,7 @@ namespace ConfApp.Shared.Admin
 
         protected override void OnInitialized()
         {
-            speakers = SpeakerService.GetSpeakers().ToList();
+            speakers = SpeakerService.GetSpeakersIncludeInstitutions().ToList();
         }
 
         private bool FilterFunc(Speaker element)
@@ -41,6 +44,18 @@ namespace ConfApp.Shared.Admin
             return false;
         }
 
+        private async Task AddSpeaker()
+        {
+            var dialog = Dialog.Show<SpeakerAddOrUpdateDialog>("Новый участник коференции");
+            var result = await dialog.Result;
+            if (!result.Cancelled)
+            {
+                var addedSpeaker = await SpeakerService.AddSpeaker(dialog.Result.Result.Data as Speaker);
+                speakers.Add(addedSpeaker);
+                Snackbar.Add("Участник конференции успешно добавлен!", Severity.Success);
+            }
+        }
+
         private async Task UpdateSpeaker(Speaker speaker)
         {
             var parameters = new DialogParameters { ["speaker"] = speaker };
@@ -48,10 +63,11 @@ namespace ConfApp.Shared.Admin
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var updateSpeaker = dialog.Result.Result.Data as Speaker;
+                var updatedSpeaker = await SpeakerService.UpdateSpeaker(dialog.Result.Result.Data as Speaker);
                 var index = speakers.IndexOf(speaker);
                 speakers.Remove(speaker);
-                speakers.Insert(index, updateSpeaker);
+                speakers.Insert(index, updatedSpeaker);
+                Snackbar.Add("Информация об участнике конференции обновлена!", Severity.Success);
             }
         }
 
@@ -62,19 +78,9 @@ namespace ConfApp.Shared.Admin
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var deletedSpeaker = dialog.Result.Result.Data as Speaker;
+                var deletedSpeaker = await SpeakerService.DeleteSpeaker(dialog.Result.Result.Data as Speaker);
                 speakers.Remove(deletedSpeaker);
-            }
-        }
-
-        private async Task AddSpeaker()
-        {
-            var dialog = Dialog.Show<SpeakerAddOrUpdateDialog>("Новая участник коференции");
-            var result = await dialog.Result;
-            if (!result.Cancelled)
-            {
-                var newSpeaker = dialog.Result.Result.Data as Speaker;
-                speakers.Add(newSpeaker);
+                Snackbar.Add("Участник конференции удален!", Severity.Success);
             }
         }
     }

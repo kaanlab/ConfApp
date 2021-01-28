@@ -22,6 +22,7 @@ namespace ConfApp.Data
 
         // Speaker
         IQueryable<Speaker> GetSpeakers();
+        IQueryable<Speaker> GetSpeakersIncludeInstitutions();
         Task<Speaker> AddSpeaker(Speaker speaker);
         Task<Speaker> UpdateSpeaker(Speaker speaker);
         Task<Speaker> DeleteSpeaker(Speaker speaker);

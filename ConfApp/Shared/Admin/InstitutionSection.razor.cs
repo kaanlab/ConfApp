@@ -12,6 +12,9 @@ namespace ConfApp.Shared.Admin
     public partial class InstitutionSection : ComponentBase
     {
         [Inject]
+        ISnackbar Snackbar { get; set; }
+
+        [Inject]
         IDialogService Dialog { get; set; }
 
         [Inject]
@@ -22,6 +25,7 @@ namespace ConfApp.Shared.Admin
         private IList<Institution> institutions = null;
         private HashSet<Institution> selectedItems = new HashSet<Institution>();
         private readonly string imgPath = @"images/institutions";
+
 
         protected override void OnInitialized()
         {
@@ -38,6 +42,18 @@ namespace ConfApp.Shared.Admin
             return false;
         }
 
+        private async Task AddInstitution()
+        {
+            var dialog = Dialog.Show<InstitutionAddOrUpdateDialog>("Новое учебное заведение");
+            var result = await dialog.Result;
+            if (!result.Cancelled)
+            {
+                var addedInstitution = await InstitutionService.AddInstitution(dialog.Result.Result.Data as Institution);
+                institutions.Add(addedInstitution);
+                Snackbar.Add("Добавлено новое учебное заведение!", Severity.Success);
+            }
+        }
+
         private async Task UpdateInstitution(Institution institution)
         {
             var parameters = new DialogParameters { ["institution"] = institution };
@@ -45,10 +61,11 @@ namespace ConfApp.Shared.Admin
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var updateInstitution = dialog.Result.Result.Data as Institution;
+                var updatedInstitution = await InstitutionService.UpdateInstitution(dialog.Result.Result.Data as Institution);
                 var index = institutions.IndexOf(institution);
                 institutions.Remove(institution);
-                institutions.Insert(index, updateInstitution);
+                institutions.Insert(index, updatedInstitution);
+                Snackbar.Add("Информация об учебном заведении обновлена!", Severity.Success);
             }
         }
 
@@ -59,19 +76,9 @@ namespace ConfApp.Shared.Admin
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var deletedInstitution = dialog.Result.Result.Data as Institution;
+                var deletedInstitution = await InstitutionService.DeleteInstitution(dialog.Result.Result.Data as Institution);
                 institutions.Remove(deletedInstitution);
-            }
-        }
-
-        private async Task AddInstitution()
-        {
-            var dialog = Dialog.Show<InstitutionAddOrUpdateDialog>("Новое учебное заведение");
-            var result = await dialog.Result;
-            if (!result.Cancelled)
-            {
-                var newInstitution = dialog.Result.Result.Data as Institution;
-                institutions.Add(newInstitution);
+                Snackbar.Add("Учебное заведение удалено!", Severity.Success);
             }
         }
     }

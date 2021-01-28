@@ -13,14 +13,8 @@ using System.Threading.Tasks;
 
 namespace ConfApp.Shared.Admin
 {
-    public partial class SpeakerAddOrUpdateDialog 
+    public partial class SpeakerAddOrUpdateDialog
     {
-        [Inject]
-        ISnackbar Snackbar { get; set; }
-
-        [Inject]
-        ISpeakerService SpeakerService { get; set; }
-
         [Inject]
         IInstitutionService InstitutionService { get; set; }
 
@@ -33,15 +27,14 @@ namespace ConfApp.Shared.Admin
         [CascadingParameter]
         MudDialogInstance MudDialog { get; set; }
 
-        private Institution selectedInstitution { get; set; } = new Institution() { };
+        [Parameter]
+        public Speaker Speaker { get; set; } = new Speaker() { };
 
+        private Institution selectedInstitution { get; set; } = new Institution() { };
         private bool formInvalid = true;
         private EditContext editContext;
         private readonly string imgPath = @"images/speakers";
         private ImmutableArray<Institution> institutions;
-
-        [Parameter]
-        public Speaker Speaker { get; set; } = new Speaker() { };
 
         protected override void OnInitialized()
         {
@@ -58,25 +51,10 @@ namespace ConfApp.Shared.Admin
             StateHasChanged();
         }
 
-        async Task AddOrUpdate()
+        void AddOrUpdate()
         {
-            if (Speaker.Id > 0)
-            {
-                Speaker.Institution = selectedInstitution;
-                var updateSpeaker = await SpeakerService.UpdateSpeaker(Speaker);
-                MudDialog.Close(DialogResult.Ok(updateSpeaker));
-                Snackbar.Add("Информация об участнике конференции обновлена!", Severity.Success);
-            }
-            else
-            {
-                await SpeakerService.AddSpeaker(Speaker);
-
-                Speaker.Institution = selectedInstitution;
-                var newSpeaker = await SpeakerService.UpdateSpeaker(Speaker);
-
-                MudDialog.Close(DialogResult.Ok(newSpeaker));
-                Snackbar.Add("Участник конференции добавлен!", Severity.Success);
-            }
+            Speaker.Institution = selectedInstitution;
+            MudDialog.Close(DialogResult.Ok(Speaker));
         }
         void Cancel() => MudDialog.Cancel();
 

@@ -12,6 +12,9 @@ namespace ConfApp.Shared.Admin
     public partial class ConferenceSection : ComponentBase
     {
         [Inject]
+        ISnackbar Snackbar { get; set; }
+
+        [Inject]
         IDialogService Dialog { get; set; }
 
         [Inject]
@@ -22,6 +25,7 @@ namespace ConfApp.Shared.Admin
         private IList<Conference> conferences = null;
         private HashSet<Conference> selectedItems = new HashSet<Conference>();
         private readonly string imgPath = "images";
+
 
         protected override void OnInitialized()
         {
@@ -41,6 +45,18 @@ namespace ConfApp.Shared.Admin
             return false;
         }
 
+        private async Task AddConference()
+        {
+            var dialog = Dialog.Show<ConferenceAddOrUpdateDialog>("Новая коференция");
+            var result = await dialog.Result;
+            if (!result.Cancelled)
+            {
+                var addedConfirence = await ConferenceService.AddConference(dialog.Result.Result.Data as Conference);
+                conferences.Add(addedConfirence);
+                Snackbar.Add("Конференция добавлена!", Severity.Success);
+            }
+        }
+
         private async Task UpdateConference(Conference conference)
         {
             var parameters = new DialogParameters { ["conference"] = conference };
@@ -48,10 +64,11 @@ namespace ConfApp.Shared.Admin
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var updateConfirence = dialog.Result.Result.Data as Conference;
+                var updatedConfirence = await ConferenceService.UpdateConference(dialog.Result.Result.Data as Conference);
                 var index = conferences.IndexOf(conference);
                 conferences.Remove(conference);
-                conferences.Insert(index, updateConfirence);
+                conferences.Insert(index, updatedConfirence);
+                Snackbar.Add("Информация о конференции успешно обновлена!", Severity.Success);
             }
         }
 
@@ -62,19 +79,9 @@ namespace ConfApp.Shared.Admin
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var deletedConfirence = dialog.Result.Result.Data as Conference;
+                var deletedConfirence = await ConferenceService.DeleteConference(dialog.Result.Result.Data as Conference);
                 conferences.Remove(deletedConfirence);
-            }
-        }
-
-        private async Task AddConference()
-        {
-            var dialog = Dialog.Show<ConferenceAddOrUpdateDialog>("Новая коференция");
-            var result = await dialog.Result;
-            if (!result.Cancelled)
-            {
-                var newConfirence = dialog.Result.Result.Data as Conference;
-                conferences.Add(newConfirence);
+                Snackbar.Add("Конференция удалена!", Severity.Success);
             }
         }
     }

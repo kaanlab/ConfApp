@@ -12,7 +12,8 @@ namespace ConfApp.Data
     {
         public DbSet<Speaker> Speakers { get; set; }
 
-        public IQueryable<Speaker> GetSpeakers() => this.Speakers.Include(o => o.Institution).AsNoTracking();
+        public IQueryable<Speaker> GetSpeakers() => this.Speakers.AsNoTracking();
+        public IQueryable<Speaker> GetSpeakersIncludeInstitutions() => this.Speakers.Include(o => o.Institution).AsNoTracking();
 
         public async Task<Speaker> AddSpeaker(Speaker speaker)
         {
