@@ -21,6 +21,7 @@ namespace ConfApp.Data
         {
             string connectionString = this.configuration.GetConnectionString("SqLiteConnection");
             optionsBuilder.UseSqlite(connectionString);
+            optionsBuilder.EnableDetailedErrors();
         }
     }
 }

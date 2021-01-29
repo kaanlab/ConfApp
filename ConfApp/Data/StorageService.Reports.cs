@@ -12,29 +12,58 @@ namespace ConfApp.Data
     {
         public DbSet<Report> Reports { get; set; }
 
-        public IQueryable<Report> GetReports() => 
-            this.Reports.Include(o => o.Speakers).Include(o => o.Conference).Include(o => o.Attachments).AsNoTracking();
+        public IQueryable<Report> GetReports() =>
+            this.Reports.Include(o => o.Speakers)
+                        .Include(o => o.Conference)
+                        .AsNoTracking()
+                        .AsQueryable();
 
         public async Task<Report> AddReport(Report report)
         {
-            EntityEntry<Report> reportEntityEntry = await this.Reports.AddAsync(report);
+            var conference = await this.Conferences.FirstOrDefaultAsync(o => o.ConferenceId == report.Conference.ConferenceId);
+            var speakers = await this.Speakers
+                .Where(o => report.Speakers.Select(o => o.SpeakerId).Contains(o.SpeakerId))
+                .ToListAsync();
+
+            var newReport = new Report()
+            {
+                Topic = report.Topic,
+                VideoUrl = report.VideoUrl
+            };
+            var addedReport = await this.Reports.AddAsync(newReport);
             await this.SaveChangesAsync();
-            return reportEntityEntry.Entity;
+
+            addedReport.Entity.Conference = conference;
+            addedReport.Entity.Speakers = speakers;
+            var reportEntry = this.Reports.Update(addedReport.Entity);
+            await this.SaveChangesAsync();
+
+            return reportEntry.Entity;
         }
 
         public async Task<Report> UpdateReport(Report report)
         {
-            this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            EntityEntry<Report> reportEntityEntry = this.Reports.Update(report);
+            var conference = await this.Conferences.FirstOrDefaultAsync(o => o.ConferenceId == report.Conference.ConferenceId);
+            var speakers = await this.Speakers.Where(o => o.Report.ReportId == report.ReportId).ToListAsync();
+            var updatedReport = await this.Reports.FirstOrDefaultAsync(o => o.ReportId == report.ReportId);
+
+            updatedReport.Topic = report.Topic;
+            updatedReport.VideoUrl = report.VideoUrl;
+            updatedReport.Conference = conference;
+            updatedReport.Speakers = speakers;
+            var reportEntry = this.Reports.Update(updatedReport);
             await this.SaveChangesAsync();
-            return reportEntityEntry.Entity;
+
+            return reportEntry.Entity;
         }
 
         public async Task<Report> DeleteReport(Report report)
         {
-            EntityEntry<Report> reportEntityEntry = this.Reports.Remove(report);
+            var deletedReport = await this.Reports.FirstOrDefaultAsync(o => o.ReportId == report.ReportId);
+            var reportEntry = this.Reports.Remove(report);
             await this.SaveChangesAsync();
-            return reportEntityEntry.Entity;
+
+            return reportEntry.Entity;
         }
     }
 }

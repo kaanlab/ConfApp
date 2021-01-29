@@ -7,7 +7,7 @@ namespace ConfApp.Models
 {
     public class Attachment
     {
-        public int Id { get; set; }
+        public int AttachmentId { get; set; }
         public string Path { get; set; }
     }
 }

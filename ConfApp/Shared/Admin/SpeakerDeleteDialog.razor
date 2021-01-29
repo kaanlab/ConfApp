@@ -3,7 +3,7 @@
         <MudTextField Value="@Speaker.LastName" Label="Фамилия" ReadOnly="true" />
         <MudTextField Value="@Speaker.FirstName" Label="Имя" ReadOnly="true" />
         <MudTextField Value="@Speaker.Position" Label="Должность" ReadOnly="true" />
-        <MudTextField Value="@Speaker.Institution.Name" Label="Учебное заведение" ReadOnly="true" />
+        <MudTextField Value="@Speaker.Institution?.Name" Label="Учебное заведение" ReadOnly="true" />
 
         <MudGrid Class="mt-5">
             <MudItem>

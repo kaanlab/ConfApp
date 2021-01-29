@@ -8,7 +8,7 @@ namespace ConfApp.Models
 {
     public class Report
     {
-        public int Id { get; set; }
+        public int ReportId { get; set; }
         [Required(ErrorMessage = "Это поле обязательно для заполнения, миннимальная длина 8 символов")]
         [MinLength(8)]
         public string Topic { get; set; }
@@ -18,7 +18,7 @@ namespace ConfApp.Models
 
         //
         public Conference Conference { get; set; }
-        public IEnumerable<Attachment> Attachments { get; set; }
-        public IEnumerable<Speaker> Speakers { get; set; }
+        public ICollection<Attachment> Attachments { get; set; }
+        public ICollection<Speaker> Speakers { get; set; }
     }
 }

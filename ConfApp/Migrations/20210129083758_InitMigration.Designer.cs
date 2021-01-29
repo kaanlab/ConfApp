@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConfApp.Migrations
 {
     [DbContext(typeof(StorageService))]
-    [Migration("20210128065030_InitMigration")]
+    [Migration("20210129083758_InitMigration")]
     partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace ConfApp.Migrations
 
             modelBuilder.Entity("ConfApp.Models.Attachment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AttachmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -30,7 +30,7 @@ namespace ConfApp.Migrations
                     b.Property<int?>("ReportId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.HasKey("AttachmentId");
 
                     b.HasIndex("ReportId");
 
@@ -39,7 +39,7 @@ namespace ConfApp.Migrations
 
             modelBuilder.Entity("ConfApp.Models.Conference", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ConferenceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -62,14 +62,14 @@ namespace ConfApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("ConferenceId");
 
                     b.ToTable("Conferences");
                 });
 
             modelBuilder.Entity("ConfApp.Models.Institution", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("InstitutionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -80,14 +80,14 @@ namespace ConfApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("InstitutionId");
 
                     b.ToTable("Institutions");
                 });
 
             modelBuilder.Entity("ConfApp.Models.Report", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ReportId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -104,7 +104,7 @@ namespace ConfApp.Migrations
                     b.Property<string>("VideoUrl")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("ReportId");
 
                     b.HasIndex("ConferenceId");
 
@@ -113,7 +113,7 @@ namespace ConfApp.Migrations
 
             modelBuilder.Entity("ConfApp.Models.Speaker", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SpeakerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -138,7 +138,7 @@ namespace ConfApp.Migrations
                     b.Property<int?>("ReportId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.HasKey("SpeakerId");
 
                     b.HasIndex("InstitutionId");
 

@@ -12,7 +12,7 @@ namespace ConfApp.Data
     {
         public DbSet<Institution> Institutions { get; set; }
 
-        public IQueryable<Institution> GetInstitutions() => this.Institutions.AsNoTracking();
+        public IQueryable<Institution> GetInstitutions() => this.Institutions.AsNoTracking().AsQueryable();
 
         public async Task<Institution> AddInstitution(Institution institution)
         {

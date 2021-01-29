@@ -32,7 +32,5 @@ namespace ConfApp.Data
         Task<Institution> AddInstitution(Institution institution);
         Task<Institution> UpdateInstitution(Institution institution);
         Task<Institution> DeleteInstitution(Institution institution);
-
-
     }
 }

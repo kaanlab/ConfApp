@@ -1,22 +1,6 @@
-﻿@page "/admin"
+﻿@layout AdminLayout
+@page "/admin"
 
-<MudLayout>
-    <MudAppBar Elevation="1">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h5" Class="mt-1">Панель управления сайтом</MudText>
-        </MudDrawerHeader>
-    </MudAppBar>
 
-    <MudMainContent Class="bg-control-panel">
-        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
-            <ConferenceSection />
-            <InstitutionSection />
-            <SpeakerSection />
-            <ReportSection />
-        </MudContainer>
-    </MudMainContent>
-</MudLayout>
-
-@code {
-
-}
+<SpeakerSection />
+<ReportSection />

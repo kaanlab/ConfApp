@@ -11,7 +11,7 @@ namespace ConfApp.Migrations
                 name: "Conferences",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    ConferenceId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     MainTopic = table.Column<string>(type: "TEXT", nullable: false),
@@ -21,28 +21,28 @@ namespace ConfApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Conferences", x => x.Id);
+                    table.PrimaryKey("PK_Conferences", x => x.ConferenceId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Institutions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    InstitutionId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Logo = table.Column<string>(type: "TEXT", nullable: true),
                     Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Institutions", x => x.Id);
+                    table.PrimaryKey("PK_Institutions", x => x.InstitutionId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Reports",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    ReportId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Topic = table.Column<string>(type: "TEXT", nullable: false),
                     ReportDate = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -51,12 +51,12 @@ namespace ConfApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reports", x => x.Id);
+                    table.PrimaryKey("PK_Reports", x => x.ReportId);
                     table.ForeignKey(
                         name: "FK_Reports_Conferences_ConferenceId",
                         column: x => x.ConferenceId,
                         principalTable: "Conferences",
-                        principalColumn: "Id",
+                        principalColumn: "ConferenceId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -64,19 +64,19 @@ namespace ConfApp.Migrations
                 name: "Attachment",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    AttachmentId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Path = table.Column<string>(type: "TEXT", nullable: true),
                     ReportId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Attachment", x => x.Id);
+                    table.PrimaryKey("PK_Attachment", x => x.AttachmentId);
                     table.ForeignKey(
                         name: "FK_Attachment_Reports_ReportId",
                         column: x => x.ReportId,
                         principalTable: "Reports",
-                        principalColumn: "Id",
+                        principalColumn: "ReportId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -84,7 +84,7 @@ namespace ConfApp.Migrations
                 name: "Speakers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    SpeakerId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false),
@@ -95,18 +95,18 @@ namespace ConfApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Speakers", x => x.Id);
+                    table.PrimaryKey("PK_Speakers", x => x.SpeakerId);
                     table.ForeignKey(
                         name: "FK_Speakers_Institutions_InstitutionId",
                         column: x => x.InstitutionId,
                         principalTable: "Institutions",
-                        principalColumn: "Id",
+                        principalColumn: "InstitutionId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Speakers_Reports_ReportId",
                         column: x => x.ReportId,
                         principalTable: "Reports",
-                        principalColumn: "Id",
+                        principalColumn: "ReportId",
                         onDelete: ReferentialAction.Restrict);
                 });
 

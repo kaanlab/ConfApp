@@ -12,7 +12,7 @@ namespace ConfApp.Data
     {
         public DbSet<Conference> Conferences { get; set; }
 
-        public IQueryable<Conference> GetConferences() => this.Conferences.AsNoTracking();
+        public IQueryable<Conference> GetConferences() => this.Conferences.AsNoTracking().AsQueryable();
 
         public async Task<Conference> AddConference(Conference conference)
         {

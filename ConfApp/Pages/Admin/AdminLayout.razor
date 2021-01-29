@@ -1,0 +1,18 @@
+﻿@inherits LayoutComponentBase
+
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h5" Class="mt-1">Панель управления сайтом</MudText>
+            <MudIconButton Link="/admin" Icon="@Icons.Material.Home" Color="Color.Inherit" Edge="Edge.Start" />
+            <MudIconButton Link="/admin/conferences" Icon="@Icons.Material.Menu" Color="Color.Inherit" Edge="Edge.Start" />
+            <MudIconButton Link="/admin/institutions" Icon="@Icons.Material.AccountBalance" Color="Color.Inherit" Edge="Edge.Start" />
+        </MudDrawerHeader>
+    </MudAppBar>
+
+    <MudMainContent Class="bg-control-panel">
+        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>

@@ -18,7 +18,7 @@
         <MudTd DataLabel="Фамилия">@context.LastName</MudTd>
         <MudTd DataLabel="Имя">@context.FirstName</MudTd>
         <MudTd DataLabel="Должность">@context.Position</MudTd>
-        <MudTd DataLabel="Учебное заведение">@context.Institution.Name</MudTd>
+        <MudTd DataLabel="Учебное заведение">@context.Institution?.Name</MudTd>
         <MudTd DataLabel="Фото"><img src="/@imgPath/@context.Photo"></MudTd>
         <MudTd>
             <MudIconButton Icon="@Icons.Material.Edit" Color="Color.Info" OnClick="@((e) => UpdateSpeaker(context))" />

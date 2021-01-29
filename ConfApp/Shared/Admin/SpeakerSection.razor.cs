@@ -78,7 +78,8 @@ namespace ConfApp.Shared.Admin
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                var deletedSpeaker = await SpeakerService.DeleteSpeaker(dialog.Result.Result.Data as Speaker);
+                var deletedSpeaker = dialog.Result.Result.Data as Speaker;
+                await SpeakerService.DeleteSpeaker(deletedSpeaker);
                 speakers.Remove(deletedSpeaker);
                 Snackbar.Add("Участник конференции удален!", Severity.Success);
             }
